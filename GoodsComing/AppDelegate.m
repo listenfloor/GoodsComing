@@ -7,12 +7,55 @@
 //
 
 #import "AppDelegate.h"
+#import "HomeViewController.h"
 
 @implementation AppDelegate
+
++(AppDelegate*)ShareAppDelegate
+{
+    return (AppDelegate*)([UIApplication sharedApplication].delegate);
+}
+
+- (void)addHomeView
+{
+    if(IS_IPHONE_5)
+    {
+        self.viewController = [[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
+    }
+    else
+    {
+        self.viewController = [[HomeViewController alloc] initWithNibName:@"HomeViewControllerSmall" bundle:nil];
+    }
+    //self.viewController.title =  @"指尖货运" ;
+    UINavigationController *navController = [[UINavigationController alloc] init];
+    [navController pushViewController:self.viewController animated:YES];
+    
+    //[self.window addSubview: _navController.view];
+    self.window.rootViewController = navController;
+    
+    //向微信注册
+//    [WXApi registerApp:@"wxc14ec9b417175b1a"];
+//    
+//    [self initWeiboEngine];
+//    [self initTCWeiboEngine];
+//    [self initQzone];
+    
+//    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"everLaunchedWeibo"])
+//    {
+//        [_SinaWeiboOAuth deleteAuthorizeDataInKeychain];
+//        [_TCWeiboOAuth deleteAuthorizeDataInKeychain];
+//        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"everLaunchedWeibo"];
+//    }
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+
+    [self addHomeView];
+    
+    [self.window makeKeyAndVisible];
     return YES;
 }
 							
